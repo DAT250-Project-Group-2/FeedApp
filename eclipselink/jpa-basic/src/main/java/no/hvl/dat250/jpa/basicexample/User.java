@@ -1,5 +1,7 @@
 package no.hvl.dat250.jpa.basicexample;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,9 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+
+@Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
+    private Long id;
     private String email;
     private String Password; // should be crypted
 
@@ -29,6 +34,6 @@ public class User {
     }
 
     public void setPassword(String password) {
-        Password = password;
+        this.Password = password;
     }
 }
