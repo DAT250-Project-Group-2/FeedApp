@@ -1,7 +1,5 @@
 package no.hvl.dat250.jpa.basicexample;
 
-import lombok.Data;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,14 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
-
 @Entity
-public class User {
+public class FeedAppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    private Long id;
     private String email;
     private String Password; // should be crypted
+    private List<Poll> polls = new ArrayList<>();
 
     public String getEmail() {
         return email;
@@ -34,6 +31,9 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.Password = password;
+        Password = password;
     }
+    @OneToMany
+    public List<Poll> getPolls() { return this.polls;}
+    public void setPolls(List<Poll> poll) {this.polls = poll;}
 }
