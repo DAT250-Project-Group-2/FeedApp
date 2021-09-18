@@ -1,5 +1,6 @@
 package no.hvl.dat250.jpa.basicexample;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -24,10 +25,7 @@ public class Main {
 
         em.getTransaction().begin();
 
-        FeedAppUser user = new FeedAppUser();
-        user.setEmail("sigve.holøland@gmail.com");
-        user.setPassword("qwerty");
-        em.persist(user);
+
 
 
         Question question = new Question();
@@ -42,9 +40,17 @@ public class Main {
         em.persist(results);
 
         Poll poll = new Poll();
-        poll.addQuestion(question);
+        poll.addQuestion(question); // way 1 to add list
         poll.addQuestion(question1);
         em.persist(poll);
+
+        FeedAppUser user = new FeedAppUser();
+        user.setEmail("sigve.holøland@gmail.com");
+        user.setPassword("qwerty");
+        List<Poll> pollList = new ArrayList<>(); //way 2 to add list
+        pollList.add(poll);
+        user.setPolls(pollList);
+        em.persist(user);
         em.getTransaction().commit();
         em.close();
     }
