@@ -2,7 +2,7 @@ package no.hvl.dat250.jpa.basicexample;
 import javax.persistence.*;
 
 @Entity
-public class Questions {
+public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long questionId;

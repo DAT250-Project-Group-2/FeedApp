@@ -23,11 +23,6 @@ public class Main {
         }
 
         em.getTransaction().begin();
-        //Todo todo = new Todo();
-
-        //todo.setSummary("This is a test");
-        //todo.setDescription("This is a test");
-        //em.persist(todo);
 
         FeedAppUser user = new FeedAppUser();
         user.setEmail("sigve.holøland@gmail.com");
@@ -35,15 +30,20 @@ public class Main {
         em.persist(user);
 
 
-        Questions questions = new Questions();
-        questions.setQuestionText("Do you like oranges?");
-        questions.setAnswer("Yes");
-        em.persist(questions);
+        Question question = new Question();
+        question.setQuestionText("Do you like oranges?");
+        question.setAnswer("Yes");
+        em.persist(question);
+        Question question1 = new Question();
+        question1.setQuestionText("Do you love Bergen?");
+        question1.setAnswer("Yes");
+        em.persist(question1);
         Results results = new Results();
         em.persist(results);
 
         Poll poll = new Poll();
-        poll.addQuestion(questions);
+        poll.addQuestion(question);
+        poll.addQuestion(question1);
         em.persist(poll);
         em.getTransaction().commit();
         em.close();

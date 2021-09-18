@@ -11,15 +11,15 @@ public class Poll {
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
     private List<Results> resultsList = new ArrayList<>();
-    private List<Questions> questions = new ArrayList<>();
+    private List<Question> questions = new ArrayList<>();
 
     @OneToMany(mappedBy = "poll")
     public List<Results> getResults() { return this.resultsList;}
     public void setResultsList(List<Results> result) {this.resultsList = result;}
     @OneToMany(mappedBy = "poll")
-    public List<Questions> getQuestions() {return this.questions;}
-    public void setQuestions(List<Questions> question){this.questions = question;}
-    public void addQuestion(Questions question) {
+    public List<Question> getQuestions() {return this.questions;}
+    public void setQuestions(List<Question> question){this.questions = question;}
+    public void addQuestion(Question question) {
         this.questions.add(question);
     }
 }
