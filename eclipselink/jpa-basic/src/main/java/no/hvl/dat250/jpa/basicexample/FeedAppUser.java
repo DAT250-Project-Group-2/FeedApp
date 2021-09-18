@@ -14,6 +14,7 @@ import javax.persistence.Transient;
 public class FeedAppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
+    private long id;
     private String email;
     private String Password; // should be crypted
     private List<Poll> polls = new ArrayList<>();

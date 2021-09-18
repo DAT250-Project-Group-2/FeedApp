@@ -19,7 +19,7 @@ public class Main {
         Query q2 = em.createQuery("select u from FeedAppUser u");
         List<FeedAppUser> userList = q2.getResultList();
         for (FeedAppUser user : userList){
-            System.out.println(user);
+            System.out.println(user.getEmail());
         }
 
         em.getTransaction().begin();
@@ -30,11 +30,21 @@ public class Main {
         //em.persist(todo);
 
         FeedAppUser user = new FeedAppUser();
-        user.setEmail("sigve.holleland@gmail.com");
+        user.setEmail("sigve.holøland@gmail.com");
         user.setPassword("qwerty");
         em.persist(user);
 
 
+        Questions questions = new Questions();
+        questions.setQuestionText("Do you like oranges?");
+        questions.setAnswer("Yes");
+        em.persist(questions);
+        Results results = new Results();
+        em.persist(results);
+
+        Poll poll = new Poll();
+        poll.addQuestion(questions);
+        em.persist(poll);
         em.getTransaction().commit();
         em.close();
     }
