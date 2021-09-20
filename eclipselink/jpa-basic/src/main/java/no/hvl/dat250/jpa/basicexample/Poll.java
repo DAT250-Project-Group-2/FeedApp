@@ -10,16 +10,20 @@ public class Poll {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
-    private List<Results> resultsList = new ArrayList<>();
-    private List<Question> questions = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "owner")
+    private FeedAppUser user_id;
+    private String time_limit;
+
+    /*private List<Results> resultsList = new ArrayList<>();
+
+    public FeedAppUser getUser_id() {
+        return user_id;
+    }
 
     @OneToMany(mappedBy = "poll")
     public List<Results> getResults() { return this.resultsList;}
     public void setResultsList(List<Results> result) {this.resultsList = result;}
-    @OneToMany(mappedBy = "poll")
-    public List<Question> getQuestions() {return this.questions;}
-    public void setQuestions(List<Question> question){this.questions = question;}
-    public void addQuestion(Question question) {
-        this.questions.add(question);
-    }
+
+     */
 }

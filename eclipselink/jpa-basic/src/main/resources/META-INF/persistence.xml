@@ -9,7 +9,6 @@
         <class>no.hvl.dat250.jpa.basicexample.FeedAppUser</class>
         <class>no.hvl.dat250.jpa.basicexample.Poll</class>
         <class>no.hvl.dat250.jpa.basicexample.Results</class>
-        <class>no.hvl.dat250.jpa.basicexample.Question</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
