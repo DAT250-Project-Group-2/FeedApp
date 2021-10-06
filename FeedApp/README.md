@@ -1,4 +1,5 @@
-#FeedApp
+
+## FeedApp
 
 1. Import this project as a maven-project such that the database dependencies are loaded.
 2. Change the location of the database folder in the persistence.xml file 
