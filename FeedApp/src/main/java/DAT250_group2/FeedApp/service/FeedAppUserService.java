@@ -6,15 +6,8 @@ import DAT250_group2.FeedApp.repository.FeedAppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
 @Service
 public class FeedAppUserService {
-
-    @PersistenceContext
-    EntityManager em;
 
     @Autowired
     private FeedAppUserRepository repo;
@@ -30,10 +23,9 @@ public class FeedAppUserService {
     public FeedAppUser getFeedAppUserById(Long id) {
         return repo.findFeedAppUserById(id);
     }
+
     public List<FeedAppUser> findAll() {
-        Query query = em.createNamedQuery("FeedAppUser.findAll");
-        List<FeedAppUser> users = query.getResultList();
-        return users;
+        return repo.findAll();
     }
 
     public FeedAppUser updateFeedAppUser(FeedAppUser user) {
@@ -44,7 +36,11 @@ public class FeedAppUserService {
     }
 
     public String deleteFeedAppUser(long id) {
-        repo.deleteById(id);
-        return "User with id:  " + id + " deleted.";
+        if (repo.existsById(id)){
+            repo.deleteById(id);
+            return "User with id:  " + id + " deleted.";
+        } else {
+            return "Error: user not found";
+        }
     }
 }

@@ -3,11 +3,8 @@ package DAT250_group2.FeedApp.controller;
 import DAT250_group2.FeedApp.entity.FeedAppUser;
 import DAT250_group2.FeedApp.service.FeedAppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -18,13 +15,9 @@ public class FeedAppController {
 
 
     @PostMapping("/users")
-    public ResponseEntity<Object> createUser(@RequestBody FeedAppUser user) {
+    public FeedAppUser createUser(@RequestBody FeedAppUser user) {
         FeedAppUser savedUser = service.saveUser(user);
-
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(savedUser.getId()).toUri();
-
-        return ResponseEntity.created(location).build();
+        return savedUser;
     }
 
     @GetMapping("/users")
@@ -32,12 +25,12 @@ public class FeedAppController {
         return service.findAll();
     }
 
-    @GetMapping("/users/")
+    @GetMapping("/users") // // localhost:8080/users/?id=1
     public FeedAppUser findFeedAppUserById(@RequestParam(value="id") Long id) {
         return service.getFeedAppUserById(id);
     }
 
-    @GetMapping("/users/{email}")
+    @GetMapping("/users/{email}") // localhost:8080/users/janne@hvl.no
     public FeedAppUser findFeedAppUserByEmail(@PathVariable String email) {
         return service.getFeedAppUserByEmail(email);
     }

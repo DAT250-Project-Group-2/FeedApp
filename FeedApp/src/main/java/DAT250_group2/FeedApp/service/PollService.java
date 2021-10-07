@@ -19,6 +19,7 @@ public class PollService {
     public Poll getPollById(Long id) {
         return repo.findPollById(id);
     }
+
     public List<Poll> findAll() {
         return repo.findAll();
     }
