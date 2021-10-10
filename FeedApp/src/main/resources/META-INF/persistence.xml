@@ -8,7 +8,7 @@
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:derby:/home/janne/eclipse/databases/feedAppTest"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:derby:/home/feedAppTest;create=true"/>
             <property name="javax.persistence.jdbc.user" value="app"/>
             <property name="javax.persistence.jdbc.password" value="app"/>
 

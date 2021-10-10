@@ -25,7 +25,7 @@ public class FeedAppController {
         return service.findAll();
     }
 
-    @GetMapping("/users") // // localhost:8080/users/?id=1
+    @GetMapping("/users/") // // localhost:8080/users/?id=1
     public FeedAppUser findFeedAppUserById(@RequestParam(value="id") Long id) {
         return service.getFeedAppUserById(id);
     }
