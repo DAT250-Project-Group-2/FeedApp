@@ -1,6 +1,8 @@
 package DAT250_group2.FeedApp.service;
 
 import java.util.List;
+import java.util.Optional;
+
 import DAT250_group2.FeedApp.entity.FeedAppUser;
 import DAT250_group2.FeedApp.repository.FeedAppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +18,11 @@ public class FeedAppUserService {
         return repo.save(user);
     }
 
-    public FeedAppUser getFeedAppUserByEmail(String email) {
+    public Optional<FeedAppUser> getFeedAppUserByEmail(String email) {
         return repo.findFeedAppUserByEmail(email);
     }
 
-    public FeedAppUser getFeedAppUserById(Long id) {
+    public Optional<FeedAppUser> getFeedAppUserById(long id) {
         return repo.findFeedAppUserById(id);
     }
 
@@ -28,19 +30,7 @@ public class FeedAppUserService {
         return repo.findAll();
     }
 
-    public FeedAppUser updateFeedAppUser(FeedAppUser user) {
-        FeedAppUser existingUser = repo.findFeedAppUserById(user.getId());
-        existingUser.setEmail(user.getEmail());
-        existingUser.setPassword(user.getPassword());
-        return repo.save(existingUser);
-    }
-
-    public String deleteFeedAppUser(long id) {
-        if (repo.existsById(id)){
-            repo.deleteById(id);
-            return "User with id:  " + id + " deleted.";
-        } else {
-            return "Error: user not found";
-        }
+    public void deleteFeedAppUser(long id) {
+        repo.deleteById(id);
     }
 }
