@@ -1,6 +1,8 @@
 package DAT250_group2.FeedApp.service;
 
 import java.util.List;
+import java.util.Optional;
+
 import DAT250_group2.FeedApp.entity.Votes;
 import DAT250_group2.FeedApp.repository.VotesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,23 +18,15 @@ public class VotesService {
         return repo.save(votes);
     }
 
-    public Votes getVotesById(Long id) {
-
+    public Optional<Votes> getVotesById(Long id) {
         return repo.findVotesById(id);
     }
+
     public List<Votes> findAll() {
         return repo.findAll();
     }
 
-    public Votes updateVotes(Votes votes) {
-        Votes existingVotes = repo.findVotesById(votes.getId());
-        existingVotes.setNo_votes(votes.getNo_votes());
-        existingVotes.setYes_votes(votes.getYes_votes());
-        return repo.save(existingVotes);
-    }
-
-    public String deleteVotes(long id) {
+    public void deleteVotes(long id) {
         repo.deleteById(id);
-        return "Votes with id:  " + id + " deleted.";
     }
 }

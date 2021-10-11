@@ -17,15 +17,6 @@ public class FeedAppController {
     private FeedAppUserService service;
 
 
-    @PostMapping("/users")
-    public ResponseEntity<FeedAppUser> createUser(@RequestBody FeedAppUser user) {
-        try {
-            FeedAppUser newUser = service.saveUser(user);
-            return new ResponseEntity<>(newUser, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 
     @GetMapping("/users")
     public ResponseEntity<List<FeedAppUser>> findAllFeedAppUsers() {
@@ -55,6 +46,16 @@ public class FeedAppController {
             return new ResponseEntity<>(user.get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/users")
+    public ResponseEntity<FeedAppUser> createUser(@RequestBody FeedAppUser user) {
+        try {
+            FeedAppUser newUser = service.saveUser(user);
+            return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
