@@ -2,12 +2,18 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import PollComponent from "./component/PollComponent";
 import UserComponent from "./component/UserComponent";
+import PollScreen from "./screens/PollScreen";
+import AppNavbar from "./component/AppNavbar";
 
 export default function App() {
     return (
+        <div>
+
         <Router>
             <div>
-                <nav>
+            <AppNavbar /> 
+            <br/>
+                {/* <nav>
                     <ul>
                         <li>
                             <Link to="/">Home</Link>
@@ -19,7 +25,7 @@ export default function App() {
                             <Link to="/polls">Polls</Link>
                         </li>
                     </ul>
-                </nav>
+                </nav> */}
 
                 {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
@@ -36,11 +42,13 @@ export default function App() {
                 </Switch>
             </div>
         </Router>
+        {/* <PollScreen /> */}
+        </div>
     );
 }
 
 function Home() {
-    return <h2>Home</h2>;
+    return <h2 className="text-center">Home</h2>;
 }
 
 
