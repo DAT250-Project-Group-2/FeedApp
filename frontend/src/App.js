@@ -1,25 +1,24 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import PollComponent from "./component/PollComponent";
 import UserComponent from "./component/UserComponent";
+import AppNavbar from "./component/AppNavbar";
+import Home from "./screens/Home";
 
 export default function App() {
     return (
+        <div>
+
         <Router>
             <div>
-                <nav>
-                    <ul>
-                        <li>
-                            <Link to="/">Home</Link>
-                        </li>
-                        <li>
-                            <Link to="/users">Users</Link>
-                        </li>
-                    </ul>
-                </nav>
-
+            <AppNavbar /> 
+            <br/>
                 {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
                 <Switch>
+                    <Route path="/polls">
+                        <PollComponent />
+                    </Route>
                     <Route path="/users">
                         <UserComponent />
                     </Route>
@@ -29,11 +28,9 @@ export default function App() {
                 </Switch>
             </div>
         </Router>
+        {/* <PollScreen /> */}
+        </div>
     );
-}
-
-function Home() {
-    return <h2>Home</h2>;
 }
 
 

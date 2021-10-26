@@ -20,6 +20,7 @@ public class Poll {
     private String question;
     private int time_limit;
     private boolean is_active;
+    private String question;
 
 
     public Long getId() {
@@ -68,5 +69,12 @@ public class Poll {
 
     public void setIs_active(boolean is_active) {
         this.is_active = is_active;
+    }
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
     }
 }

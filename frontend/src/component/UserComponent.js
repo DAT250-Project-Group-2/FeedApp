@@ -19,27 +19,26 @@ function UserComponent() {
 
     return (
         <div className = "container">
-            <h1 className = "text-center"> Users List</h1>
+            <h1 className = "text-center"> User List</h1>
             <table className = "table table-striped">
                 <thead>
-                <tr>
-                    <th> User Id</th>
-                    <th> User Email</th>
-                    <th> User Password</th>
-                </tr>
-
+                    <tr>
+                        <th> User Id</th>
+                        <th> User Email</th>s
+                        <th> User Password</th>
+                    </tr>
                 </thead>
                 <tbody>
-                {
-                    users.map(
-                        user =>
-                            <tr key = {user.id}>
-                                <td> {user.id }</td>
-                                <td> {user.email }</td>
-                                <td> {user.password }</td>
-                            </tr>
-                    )
-                }
+                    {
+                        users.map(
+                                user =>
+                                <tr key = {user.id}>
+                                    <td> {user.id }</td>
+                                    <td> {user.email }</td>
+                                    <td> {user.password }</td>    
+                                </tr>
+                        )
+                    }
                 </tbody>
             </table>
         </div>
