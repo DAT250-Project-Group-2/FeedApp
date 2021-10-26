@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import PollComponent from "./component/PollComponent";
 import UserComponent from "./component/UserComponent";
 
 export default function App() {
@@ -14,12 +15,18 @@ export default function App() {
                         <li>
                             <Link to="/users">Users</Link>
                         </li>
+                        <li>
+                            <Link to="/polls">Polls</Link>
+                        </li>
                     </ul>
                 </nav>
 
                 {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
                 <Switch>
+                    <Route path="/polls">
+                        <PollComponent />
+                    </Route>
                     <Route path="/users">
                         <UserComponent />
                     </Route>
