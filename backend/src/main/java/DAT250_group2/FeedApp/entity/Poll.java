@@ -17,6 +17,7 @@ public class Poll {
 
     @OneToOne(mappedBy = "poll_id",cascade = CascadeType.ALL, fetch = FetchType.LAZY )
     private Votes votes;
+    private String question;
     private int time_limit;
     private boolean is_active;
 
@@ -27,6 +28,14 @@ public class Poll {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public String getQuestion() {
+        return question;
     }
 
     public FeedAppUser getUser_id() {

@@ -54,6 +54,7 @@ public class PollController {
             _existingPoll.setIs_active(poll.getIs_active());
             _existingPoll.setTime_limit(poll.getTime_limit());
             _existingPoll.setVotes(poll.getVotes());
+            _existingPoll.setQuestion(poll.getQuestion());
             return new ResponseEntity<>(service.savePoll(_existingPoll), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

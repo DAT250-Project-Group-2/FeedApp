@@ -22,7 +22,7 @@ public class FeedAppController {
     @GetMapping("/users")
     public ResponseEntity<List<FeedAppUser>> findAllFeedAppUsers() {
         try {
-            return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
+            return new ResponseEntity(service.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

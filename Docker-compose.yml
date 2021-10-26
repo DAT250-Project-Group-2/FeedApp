@@ -1,0 +1,67 @@
+# Docker Compose file Reference (https://docs.docker.com/compose/compose-file/)
+
+version: '3.7'
+
+# Define services
+services:
+  # Backend service
+  feedapp_backend:
+    # Configuration for building the docker image for the backend service
+    build:
+      context: backend/ # Use an image built from the specified dockerfile in the `backend` directory.
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080 # Forward the exposed port 8080 on the container to port 8080 on the host machine
+    restart: always
+    depends_on: 
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/feedappdb?createDatabaseIfNotExist=true  
+    networks: 
+      - backend
+      - frontend
+
+  # Frontend Service 
+  feedapp_frontend:
+    build:
+      context: frontend/ # Use an image built from the specified dockerfile in the `frontend` directory.
+      dockerfile: Dockerfile
+      #args:
+      #  FeedApp_db: http://localhost:8080/
+    ports:
+      - 3000:80
+    restart: always
+    depends_on:
+      - feedapp_backend
+    networks:
+      - frontend  
+
+  # Database Service (MySQL)
+  db:
+    image: mysql:latest
+    healthcheck:
+         test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+         timeout: 45s
+         interval: 10s
+         retries: 10
+    ports:
+      - 3306:3306
+    restart: always
+    environment:
+      MYSQL_DATABASE: feedappdb
+      MYSQL_USER: app
+      MYSQL_PASSWORD: app
+      MYSQL_ROOT_PASSWORD: root
+#    volumes:
+#      - db-data:/var/lib/mysql
+    networks:
+      - backend  
+  
+# Volumes
+#volumes:
+#  db-data:
+
+networks:
+  backend:
+  frontend:    

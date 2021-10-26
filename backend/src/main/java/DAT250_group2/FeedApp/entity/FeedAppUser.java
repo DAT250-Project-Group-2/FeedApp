@@ -6,13 +6,14 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-@Entity
+
 @Table(name="FeedAppUsers")
 @NamedQueries({
         @NamedQuery(name = "FeedAppUser.findAll", query = "SELECT c FROM FeedAppUser c"),
         @NamedQuery(name = "FeedAppUser.findByEmail", query = "SELECT c FROM FeedAppUser c WHERE c.email = :email")
 })
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "polls"})
+@Entity
 public class FeedAppUser implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
