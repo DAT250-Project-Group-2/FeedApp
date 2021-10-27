@@ -12,7 +12,7 @@ function AppNavbar() {
           <Nav.Link href="/polls">Polls</Nav.Link>
         </Nav>
         <Nav>
-          <Nav.Link href="#register">Register</Nav.Link>
+          <Nav.Link href="/register">Register</Nav.Link>
           <Nav.Link href="/login">Login</Nav.Link>
         </Nav>
       </Container>
