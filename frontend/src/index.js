@@ -8,6 +8,7 @@ import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AppNavbar from "./component/AppNavbar";
 import PollScreen from "./screens/PollScreen";
+import LoginScreen from "./screens/LoginScreen";
 
 const FeedApp = () => {
   return (
@@ -23,6 +24,9 @@ const FeedApp = () => {
             </Route>
             <Route path="/users">
               <UserComponent />
+            </Route>
+            <Route path="/login">
+              <LoginScreen />
             </Route>
             <Route path="/">
               <Home />

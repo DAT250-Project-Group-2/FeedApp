@@ -8,6 +8,10 @@ const getUser = id => {
   return http.get(`/users/${id}`);
 };
 
+const getUserByEmail = email => {
+  return http.get(`/users/?email=${email}`)
+}
+
 const createUser = data => {
   return http.post("/users", data);
 };
@@ -27,6 +31,7 @@ const removeAllUsers = () => {
 const exportedObjects = {
     getAllUsers,
     getUser,
+    getUserByEmail,
     createUser,
     updateUser,
     removeUser,
