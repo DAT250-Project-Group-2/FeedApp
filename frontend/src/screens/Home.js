@@ -6,28 +6,25 @@ import "./Home.css";
 
 function Home() {
   const history = useHistory();
-
   const [pollPin, setPollPin] = useState();
-
   const [pollIds, setPollIds] = useState([]);
 
   useEffect(() => {
+    const getAllPolls = () => {
+      PollService.getAllPolls()
+        .then((response) => {
+          let polls = response.data
+          let IDs = [];
+          setPollIds(polls.map(poll => IDs.push(poll.id)));
+          console.log(pollIds)
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    };
     getAllPolls();
   }, []);
 
-  const getAllPolls = () => {
-    PollService.getAllPolls()
-      .then((response) => {
-        let polls = response.data
-        let IDs = [];
-        polls.map(poll => IDs.push(poll.id));
-        setPollIds(IDs);
-        console.log(pollIds)
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
 
   const onFormSubmit = (e) => {
     e.preventDefault();
@@ -65,7 +62,6 @@ function Home() {
                   placeholder="Enter Poll pin"
                 />
               </Form.Group>
-
               <div class="col text-center">
                 <Button variant="secondary" type="submit" size="lg">
                   Enter
