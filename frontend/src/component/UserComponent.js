@@ -11,9 +11,10 @@ function UserComponent() {
 
     const getUsers = () => {
 
-        UserService.getUsers().then((response) => {
+        UserService.getAllUsers().then((response) => {
             setUsers(response.data)
             console.log(response.data);
+            
         });
     };
 
@@ -24,7 +25,7 @@ function UserComponent() {
                 <thead>
                     <tr>
                         <th> User Id</th>
-                        <th> User Email</th>s
+                        <th> User Email</th>
                         <th> User Password</th>
                     </tr>
                 </thead>

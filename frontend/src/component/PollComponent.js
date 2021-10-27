@@ -11,7 +11,7 @@ function PollComponent() {
 
     const getPolls = () => {
 
-        PollService.getPolls().then((response) => {
+        PollService.getAllPolls().then((response) => {
             setPolls(response.data)
             console.log(response.data);
         });

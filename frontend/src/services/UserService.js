@@ -1,12 +1,37 @@
-import axios from 'axios';
+import http from "../http-common";
 
-const USERS_API_BASE_URL = 'http://localhost:8080/users';
+const getAllUsers = () => {
+  return http.get("/users");
+};
 
-class UserService{
+const getUser = id => {
+  return http.get(`/users/${id}`);
+};
 
-    getUsers(){
-        return axios.get(USERS_API_BASE_URL);
-    }
+const createUser = data => {
+  return http.post("/users", data);
+};
+
+const updateUser = (id, data) => {
+  return http.put(`/users/${id}`, data);
+};
+
+const removeUser = id => {
+  return http.delete(`/users/${id}`);
+};
+
+const removeAllUsers = () => {
+  return http.delete(`/users`);
+};
+
+const exportedObjects = {
+    getAllUsers,
+    getUser,
+    createUser,
+    updateUser,
+    removeUser,
+    removeAllUsers
 }
 
-export default new UserService();
+export default exportedObjects;
+

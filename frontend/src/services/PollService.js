@@ -1,12 +1,37 @@
-import axios from 'axios';
+import http from "../http-common";
 
-const POLLS_API_BASE_URL = 'http://localhost:8080/polls';
+const getAllPolls = () => {
+  return http.get("/polls");
+};
 
-class PollsService{
+const getPoll = id => {
+  return http.get(`/polls/${id}`);
+};
 
-    getPolls(){
-        return axios.get(POLLS_API_BASE_URL);
-    }
+const createPoll = data => {
+  return http.post("/polls", data);
+};
+
+const updatePoll = (id, data) => {
+  return http.put(`/polls/${id}`, data);
+};
+
+const removePoll = id => {
+  return http.delete(`/polls/${id}`);
+};
+
+const removeAllPolls = () => {
+  return http.delete(`/polls`);
+};
+
+const exportedObject = {
+    getAllPolls,
+    getPoll,
+    createPoll,
+    updatePoll,
+    removePoll,
+    removeAllPolls
 }
 
-export default new PollsService();
+export default exportedObject;
+

@@ -1,12 +1,37 @@
-import axios from 'axios';
+import http from "../http-common";
 
-const VOTES_API_BASE_URL = 'http://localhost:8080/votes';
+const getAllVotes = () => {
+  return http.get("/votes");
+};
 
-class VoteService{
+const getVote = id => {
+  return http.get(`/votes/${id}`);
+};
 
-    getVotes(){
-        return axios.get(VOTES_API_BASE_URL);
-    }
+const createVote = data => {
+  return http.post("/votes", data);
+};
+
+const updateVote = (id, data) => {
+  return http.put(`/votes/${id}`, data);
+};
+
+const removeVote = id => {
+  return http.delete(`/votes/${id}`);
+};
+
+const removeAllVotes = () => {
+  return http.delete(`/votes`);
+};
+
+const exportedObjects = {
+    getAllVotes,
+    getVote,
+    createVote,
+    updateVote,
+    removeVote,
+    removeAllVotes
 }
 
-export default new VoteService();
+export default exportedObjects;
+
