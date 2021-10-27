@@ -26,11 +26,6 @@ const Poll = (props) => {
     getPoll(props.match.params.id);
   }, [props.match.params.id]);
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setCurrentPoll({ ...currentPoll, [name]: value });
-  };
-
   return (
     <Container>
       <Row className="justify-content-md-center">

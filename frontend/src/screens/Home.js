@@ -1,23 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
-import './Home.css';
-
+import PollService from "../services/PollService";
+import "./Home.css";
 
 function Home() {
+  const history = useHistory();
 
-    const [pollPin, setPollPin] = useState(),
-    onInput = ({target:{pollPin}}) => setPollPin(pollPin),
-    onFormSubmit = e => {
-      e.preventDefault()
-      console.log(pollPin)
-      setPollPin()
+  const [pollPin, setPollPin] = useState();
+
+  const [pollIds, setPollIds] = useState([]);
+
+  useEffect(() => {
+    getAllPolls();
+  }, []);
+
+  const getAllPolls = () => {
+    PollService.getAllPolls()
+      .then((response) => {
+        let polls = response.data
+        let IDs = [];
+        polls.map(poll => IDs.push(poll.id));
+        setPollIds(IDs);
+        console.log(pollIds)
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const onFormSubmit = (e) => {
+    e.preventDefault();
+    if (pollIds.includes(Number(pollPin))) {
+      routeChange(`/polls/${pollPin}`);
     }
+    else {
+      alert("Could not find poll. Please enter a different pin.")
+    }
+  };
+
+  function routeChange(path) {
+    history.push(path);
+  }
 
   return (
     <div class="pollPinContainer">
       <Container>
         <Row className="justify-content-md-center">
-        
           <Col md={{ span: 3 }}>
             <Form onSubmit={onFormSubmit}>
               <Form.Group className="mb-3" controlId="formBasicPollpin">
@@ -29,13 +58,12 @@ function Home() {
                 >
                   Poll Pin
                 </Form.Label>
-                <Form.Control 
-            type="text" 
-            onChange={onInput} 
-            value={pollPin}
-            placeholder="Enter Poll pin"
-          />
-                {/* <Form.Control type="text" placeholder="Enter Poll pin" /> */}
+                <Form.Control
+                  type="text"
+                  value={pollPin}
+                  onChange={(e) => setPollPin(e.target.value)}
+                  placeholder="Enter Poll pin"
+                />
               </Form.Group>
 
               <div class="col text-center">
