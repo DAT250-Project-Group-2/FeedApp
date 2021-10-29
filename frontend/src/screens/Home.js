@@ -24,8 +24,9 @@ function Home() {
     };
     getAllPolls();
   }, []);
+  
 
-
+//function that gets executed whenever you press enter if pollid exists reroutes you to routeChange(`/polls/${pollPin}`);
   const onFormSubmit = (e) => {
     e.preventDefault();
     if (pollIds.includes(Number(pollPin))) {

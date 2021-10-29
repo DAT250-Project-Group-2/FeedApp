@@ -29,6 +29,9 @@ const FeedApp = () => {
             <Route path="/login">
               <LoginScreen />
             </Route>
+            <Route path="/vote">
+              <LoginScreen />
+            </Route>
             <Route path="/register">
               <RegisterScreen />
             </Route>
