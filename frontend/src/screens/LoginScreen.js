@@ -2,12 +2,15 @@ import { Container, Row, Form, Button, Col } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import UserService from "../services/UserService";
 import "./LoginScreen.css";
+import { useHistory } from "react-router-dom";
 
 function LoginScreen() {
+    const history = useHistory();
     const [email,setEmail] = useState();
     const [password,setPassword] = useState();
     const [responseEmail, setResponseEmail] = useState();
     const [responsePassword, setResponsePassword] = useState();
+    const [userID, setUserID] = useState();
 
     useEffect(() => {
         const getUserByEmail = () => {
@@ -16,6 +19,7 @@ function LoginScreen() {
                     let user = response.data
                     setResponseEmail(user.email);
                     setResponsePassword(user.password);
+                    setUserID(user.id);
                     console.log(user)
                 })
                 .catch((e) => {
@@ -29,10 +33,15 @@ function LoginScreen() {
         e.preventDefault();
         if(email === responseEmail && password === responsePassword) {
             alert("OK")
+            routeChange(`/profile/${userID}`);
         } else {
             alert("invalid credentials")           
         }
     }
+
+    function routeChange(path) {
+        history.push(path);
+      }
 
     return (
         <div class="LoginScreenContainer">

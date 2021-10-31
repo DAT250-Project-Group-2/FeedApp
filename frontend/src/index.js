@@ -10,6 +10,7 @@ import AppNavbar from "./component/AppNavbar";
 import PollScreen from "./screens/PollScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
+import ProfileScreen from "./screens/ProfileScreen";
 
 const FeedApp = () => {
   return (
@@ -34,6 +35,8 @@ const FeedApp = () => {
             </Route>
             <Route path="/register">
               <RegisterScreen />
+            </Route>
+            <Route path="/profile/:id" component={ProfileScreen}>
             </Route>
             <Route path="/">
               <Home />
