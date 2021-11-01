@@ -11,6 +11,7 @@ import PollScreen from "./screens/PollScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import CreatePoll from "./screens/CreatePoll";
 
 const FeedApp = () => {
   return (
@@ -32,6 +33,9 @@ const FeedApp = () => {
             </Route>
             <Route path="/vote">
               <LoginScreen />
+            </Route>
+            <Route path="/createPoll">
+              <CreatePoll />
             </Route>
             <Route path="/register">
               <RegisterScreen />
