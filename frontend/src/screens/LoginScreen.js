@@ -33,14 +33,14 @@ function LoginScreen() {
         e.preventDefault();
         if(email === responseEmail && password === responsePassword) {
             alert("OK")
-            routeChange(`/profile/${userID}`);
+            routeChange(`/profile/${userID}`,{user:{id:userID,email:email,password:password}});
         } else {
             alert("invalid credentials")           
         }
     }
 
-    function routeChange(path) {
-        history.push(path);
+    function routeChange(path,props) {
+        history.push(path,props);
       }
 
     return (

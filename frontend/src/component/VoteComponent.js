@@ -3,7 +3,7 @@ import VoteService from '../services/VoteService';
 
 function VoteComponent() {
 
-    const [vots, setVotes] = useState([])
+    const [votes, setVotes] = useState([])
 
     useEffect(() => {
         getVotes()
@@ -12,7 +12,7 @@ function VoteComponent() {
     const getVotes = () => {
 
         VoteService.getAllVotes().then((response) => {
-            setPolls(response.data)
+            setVotes(response.data)
             console.log(response.data);
         });
     };
@@ -30,8 +30,8 @@ function VoteComponent() {
                 </thead>
                 <tbody>
                     {
-                        polls.map(
-                                poll =>
+                        votes.map(
+                                vote =>
                                 <tr key = {vote.id}>
                                     <td> {vote.id }</td>
                                     <td> {vote.yes_votes }</td>

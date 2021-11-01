@@ -12,6 +12,7 @@ import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import CreatePoll from "./screens/CreatePoll";
+import EditPoll from "./screens/EditPoll";
 
 const FeedApp = () => {
   return (
@@ -34,8 +35,9 @@ const FeedApp = () => {
             <Route path="/vote">
               <LoginScreen />
             </Route>
-            <Route path="/createPoll">
-              <CreatePoll />
+            <Route path="/createPoll" component={CreatePoll}>
+            </Route>
+            <Route path="/editPoll" component={EditPoll}>
             </Route>
             <Route path="/register">
               <RegisterScreen />

@@ -5,20 +5,26 @@ import "./Home.css";
 import { useHistory } from "react-router-dom";
 
 
-const CreatePoll = (props) => {
+const EditPoll = (props) => {
   const initialPollState = {
-    question: "",
-    user: props.location.state.user
+    newQuestion: "",
+    id: Number(props.location.state.poll.id),
+    is_active: props.location.state.poll.is_active,
+    oldQuestion: props.location.state.poll.question,
+    time_limit: props.location.state.poll.time_limit,
+    user_id: props.location.state.poll.user_id
+        
   };
   const history = useHistory();
   const [poll, setPoll] = useState(initialPollState);
-  const user = poll.user;
-  const [checked, setChecked] = useState(false);
+  const user = poll.user_id;
+  const [checked, setChecked] = useState(Boolean(initialPollState.is_active));
   const [submitted, setSubmitted] = useState(false);
 
-  const createPoll = () => {
-    PollService.createPoll({
-      question: poll.question,
+  const updatePoll = () => {
+    PollService.updatePoll(poll.id,{
+        time_limit: poll.time_limit,
+      question: (poll.newQuestion === "")? poll.oldQuestion : poll.newQuestion ,
       is_active: checked,
       user_id: poll.user,
     })
@@ -35,17 +41,13 @@ const CreatePoll = (props) => {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setPoll({ ...poll, [name]: value });
+    console.log(poll);
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    createPoll();
-    alert("Poll Created");
-  };
-
-  const newPoll = () => {
-    setPoll(initialPollState);
-    setSubmitted(false);
+    updatePoll();
+    alert("Poll Updated");
   };
 
   return (
@@ -53,18 +55,15 @@ const CreatePoll = (props) => {
       {submitted ? (
         <div className="pollPinContainer">
           <Container>
-            <h4>Your poll was successfully created!</h4>
-            <button className="btn btn-success" onClick={newPoll}>
-              Add
-            </button>
-            <button className="btn btn-success" onClick={() => history.push(`/profile/${poll.user.id}`, {user})}>
+            <h4>Your poll was successfully Updated!</h4>
+            <button className="btn btn-success" onClick={() => history.push(`/profile/${poll.user_id.id}`, {user})}>
               Back to profile
             </button>
           </Container>
         </div>
       ) : (
         <div className="pollPinContainer">
-          {console.log(poll.question)}
+          {console.log(props)}
           {console.log(checked)}
           <Container>
             <Row className="justify-content-md-center">
@@ -81,21 +80,20 @@ const CreatePoll = (props) => {
                     </Form.Label>
                     <br />
                     <Form.Control
-                      required
                       size="lg"
                       type="text"
-                      name="question"
-                      value={poll.question}
+                      name="newQuestion"
+                      value={poll.newQuestion}
                       onChange={handleInputChange}
-                      placeholder="Enter your question"
+                      placeholder={poll.oldQuestion}
                     />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formBasicCheckbox">
                     <Form.Check
                       type="checkbox"
                       label="Make poll active"
-                      value={checked}
-                      onChange={(e) => setChecked(e.target.checked)}
+                      defaultChecked = {checked}
+                      onChange={() => setChecked(!checked)}
                     />
                   </Form.Group>
 
@@ -113,4 +111,4 @@ const CreatePoll = (props) => {
     </div>
   );
 }
-export default CreatePoll;
+export default EditPoll;
