@@ -17,7 +17,6 @@ const EditPoll = (props) => {
   };
   const history = useHistory();
   const [poll, setPoll] = useState(initialPollState);
-  const user = poll.user_id;
   const [checked, setChecked] = useState(Boolean(initialPollState.is_active));
   const [submitted, setSubmitted] = useState(false);
 
@@ -51,12 +50,15 @@ const EditPoll = (props) => {
   };
 
   return (
+    <>
+    {console.log(props)}
+    {props.location.state.poll.user_id.id == localStorage.getItem("userID") ?
     <div>
       {submitted ? (
         <div className="pollPinContainer">
           <Container>
             <h4>Your poll was successfully Updated!</h4>
-            <button className="btn btn-success" onClick={() => history.push(`/profile/${poll.user_id.id}`, {user})}>
+            <button className="btn btn-success" onClick={() => history.push(`/profile/${poll.user_id.id}`)}>
               Back to profile
             </button>
           </Container>
@@ -109,6 +111,8 @@ const EditPoll = (props) => {
         </div>
       )}
     </div>
+    : <h1 className="text-center"> You dont have permission to edit this poll</h1> }
+    </>
   );
 }
 export default EditPoll;

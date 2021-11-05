@@ -13,7 +13,10 @@ function AppNavbar() {
         </Nav>
         <Nav>
           <Nav.Link href="/register">Register</Nav.Link>
-          <Nav.Link href="/login">Login</Nav.Link>
+          {(localStorage.getItem("userID") === null) ?
+           <Nav.Link href="/login">Login</Nav.Link> 
+           : <Nav> <Nav.Link onClick={() => localStorage.clear()} href="/">Logout</Nav.Link>
+             <Nav.Link href={"/profile/" + localStorage.getItem("userID")}>Profile</Nav.Link> </Nav>  }
         </Nav>
       </Container>
     </Navbar>

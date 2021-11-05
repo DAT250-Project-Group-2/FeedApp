@@ -4,8 +4,8 @@ import PollService from "../services/PollService";
 import { useHistory } from "react-router-dom";
 
 
-const Profile = (props) => {
-    const user = props.location.state.user;
+const Profile = () => {
+    const user = localStorage.getItem("userID");
     const history = useHistory();
     const [userPolls, setUserPolls] = useState([]);
 
@@ -14,7 +14,7 @@ const Profile = (props) => {
             .then((response) => {
                 let allPolls = response.data
                 setUserPolls(allPolls.map(function(poll) {
-                    if(Number(poll.user_id.id) === Number(user.id)) {
+                    if(Number(poll.user_id.id) === Number(user)) {
                         return poll;
                     }
                     return null;
@@ -38,9 +38,11 @@ const Profile = (props) => {
 
     useEffect(() => {
         getUserPolls()
-    },);
+    },[]);
 
     return (
+        <>
+        {localStorage.getItem("userID") == history.location.pathname.replace(/[^0-9]/g,'') ?
         <div className = "container">
             <h1 className = "text-center"> Your Polls</h1>
             <table className = "table table-striped">
@@ -60,7 +62,7 @@ const Profile = (props) => {
                                     <td> {poll.user_id.id }</td>
                                     <td> {poll.question }</td>
                                     <td> {(poll.is_active === true)?"yes":"no" }</td>
-                                    <td><button onClick={ () => history.push(`/editPoll`, {poll})}>
+                                    <td><button onClick={ () => history.push(`/editPoll/${poll.id}`, {poll})}>
                                     Edit
                                     </button></td>
                                     <td><button onClick={ () => deletePoll(poll.id)}>
@@ -71,10 +73,12 @@ const Profile = (props) => {
                     }
                 </tbody>
             </table>
-            <Button onClick={ () => history.push(`/createPoll`, {user})}>
+            <Button onClick={ () => history.push(`/createPoll`, {id:localStorage.getItem("userID"),email:localStorage.getItem("email")})}>
                 Create new Poll
             </Button>
         </div>
+        : <h1 className="text-center">This profile page is private</h1> }
+        </>
     )
 }
 

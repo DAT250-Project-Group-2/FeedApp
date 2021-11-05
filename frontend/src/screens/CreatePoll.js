@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import PollService from "../services/PollService";
+import UserService from "../services/UserService";
 import "./Home.css";
 import { useHistory } from "react-router-dom";
 
@@ -12,7 +13,7 @@ const CreatePoll = (props) => {
   };
   const history = useHistory();
   const [poll, setPoll] = useState(initialPollState);
-  const user = poll.user;
+  const [userData,setUserData] = useState();
   const [checked, setChecked] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
@@ -20,7 +21,7 @@ const CreatePoll = (props) => {
     PollService.createPoll({
       question: poll.question,
       is_active: checked,
-      user_id: poll.user,
+      user_id: userData,
     })
       .then((response) => {
         let res = response.data;
@@ -31,6 +32,21 @@ const CreatePoll = (props) => {
         console.log(e);
       });
   };
+
+ useEffect(() => { 
+  const findUserByID = () => {
+      UserService.getUser(localStorage.getItem("userID"))
+        .then((response) => {
+          let res = response.data;
+          setUserData(res);
+        })
+        .catch((e) => {
+          console.log(e)
+        });
+  };
+  findUserByID();
+ },[]);
+
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -57,15 +73,13 @@ const CreatePoll = (props) => {
             <button className="btn btn-success" onClick={newPoll}>
               Add
             </button>
-            <button className="btn btn-success" onClick={() => history.push(`/profile/${poll.user.id}`, {user})}>
+            <button className="btn btn-success" onClick={() => history.push(`/profile/${localStorage.getItem("userID")}`)}>
               Back to profile
             </button>
           </Container>
         </div>
       ) : (
         <div className="pollPinContainer">
-          {console.log(poll.question)}
-          {console.log(checked)}
           <Container>
             <Row className="justify-content-md-center">
               <Col md={{ span: 4 }}>

@@ -37,7 +37,7 @@ const FeedApp = () => {
             </Route>
             <Route path="/createPoll" component={CreatePoll}>
             </Route>
-            <Route path="/editPoll" component={EditPoll}>
+            <Route path="/editPoll/:id" component={EditPoll}>
             </Route>
             <Route path="/register">
               <RegisterScreen />

@@ -32,18 +32,24 @@ function LoginScreen() {
     const onSubmit = (e) => {
         e.preventDefault();
         if(email === responseEmail && password === responsePassword) {
+            localStorage.setItem("email",email);
+            localStorage.setItem("userID",userID);
             alert("OK")
-            routeChange(`/profile/${userID}`,{user:{id:userID,email:email,password:password}});
+            routeChange(`/profile/${userID}`);
+            window.location.reload(false)
         } else {
             alert("invalid credentials")           
         }
     }
 
-    function routeChange(path,props) {
-        history.push(path,props);
+
+    function routeChange(path) {
+        history.push(path);
       }
 
     return (
+        <>
+        { (localStorage.getItem("userID") === null) ?
         <div class="LoginScreenContainer">
             <Container>
                 <Row className="justify-content-md-center">
@@ -75,6 +81,8 @@ function LoginScreen() {
                 </Row>
             </Container>
         </div>
+        : <h1 className="text-center">{`Already logged in as user ${localStorage.getItem("email")}`}</h1> }
+        </>
     );
 }
 export default LoginScreen;
