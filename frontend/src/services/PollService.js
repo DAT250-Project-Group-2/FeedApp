@@ -24,12 +24,18 @@ const removeAllPolls = () => {
   return http.delete(`/polls`);
 };
 
+const registerVote = (id,vote) => {
+  return http.put(`/polls/${id}/?isGreen=${vote}`, vote);
+
+}
+
 const exportedObject = {
     getAllPolls,
     getPoll,
     createPoll,
     updatePoll,
     removePoll,
+    registerVote,
     removeAllPolls
 }
 

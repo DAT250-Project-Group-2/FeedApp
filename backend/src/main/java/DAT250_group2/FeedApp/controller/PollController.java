@@ -47,7 +47,7 @@ public class PollController {
         }
     }
 
-    @PutMapping("/polls/{id}")
+    @PutMapping( value = "/polls/{id}")
     public ResponseEntity<Poll> updatePoll(@PathVariable Long id, @RequestBody Poll poll) {
         Optional<Poll> existingPoll = service.getPollById(id);
 
@@ -59,6 +59,22 @@ public class PollController {
             _existingPoll.setNo_votes(poll.getNo_votes());
             _existingPoll.setYes_votes(poll.getYes_votes());
             return new ResponseEntity<>(service.savePoll(_existingPoll), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping(value = "/polls/{id}", params = "isGreen")
+    public ResponseEntity<Poll> registerVote(@PathVariable Long id, @RequestBody boolean isGreen) {
+        Optional<Poll> thisPoll = service.getPollById(id);
+        if (thisPoll.isPresent()) {
+            Poll _thisPoll = thisPoll.get();
+            if (isGreen) {
+                _thisPoll.setYes_votes(_thisPoll.getYes_votes() + 1);
+            } else {
+                _thisPoll.setNo_votes(_thisPoll.getNo_votes() + 1);
+            }
+            return new ResponseEntity<>(service.savePoll(_thisPoll), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

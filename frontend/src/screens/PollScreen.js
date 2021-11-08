@@ -24,21 +24,39 @@ const Poll = (props) => {
         console.log(e);
       });
   };
+
+  const registerVote = (id,vote) => {
+    PollService.registerVote(id,vote,{vote})
+      .then((response) => {
+        setCurrentPoll(response.data);
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   function increament(){
     if (noBool || yesBool) {
       setyesBool(yesBool)
-      console.log("I get here")
       setnoBool(noBool)
       return false
     }
-    
-    console.log({yesBool})
     return true
   }
+
   function reset(){
     setnoBool(false)
     setyesBool(false)
     console.log("reset success")
+  }
+
+  function sendVote(yesBool,noBool) {
+    if (!yesBool && !noBool) {
+      alert("please vote");
+    }
+    registerVote(currentPoll.id,yesBool);
+    // RouteChange to resultscreen
   }
 
   useEffect(() => {
@@ -46,6 +64,12 @@ const Poll = (props) => {
   }, [props.match.params.id]);
 
   return (
+    <>
+    { ((localStorage.getItem("userID") === null) && (currentPoll.is_public === true)) ?
+    <h1 className="text-center"> Log in or create an account to access this poll!</h1>
+    :
+    <>
+    { (currentPoll.is_active === true) ?
     <Container>
       <Row className="justify-content-md-center">
         <Col md={{ span: 8 }}>
@@ -56,23 +80,26 @@ const Poll = (props) => {
           </div>
           <br />
           <div className="text-center">
-          <Button onClick={()=> setyesBool(increament(yesBool, noBool))} variant="secondary" size="lg"> {/* */}
+          <Button onClick={()=> setyesBool(increament(yesBool, noBool))} variant={yesBool === true ? 'success' : 'danger'} size="lg">
             Yes
-          </Button>{" "}
-          <Button onClick={()=>setnoBool(increament(yesBool, noBool))} variant="secondary" size="lg">
+          </Button>{' '}
+          <Button onClick={()=>setnoBool(increament(yesBool, noBool))} variant={noBool === true ? 'success' : 'danger'} size="lg">
             No
-          </Button> 
+          </Button>{' '}
           <Button onClick={()=> reset()} variant="secondary" size="lg">
             Reset
-          </Button> 
-          <Button variant="secondary" size="lg">
+          </Button>{' '}
+          <Button onClick ={() => sendVote(yesBool,noBool)}variant="secondary" size="lg">
             Send
           </Button> 
-          <h1>Yes is: {yesBool.toString()} No is: {noBool.toString()}</h1>
           </div>
         </Col>
       </Row>
-    </Container>
+    </Container> 
+    : <h1 className="text-center"> Poll is not active</h1>  }
+    </>
+    }
+    </>
   );
 };
 

@@ -33,6 +33,7 @@ const Profile = () => {
             .catch((e) => {
                 console.log(e)
             })
+            window.location.reload(false) 
     }
 
 
