@@ -14,12 +14,12 @@ public class Poll {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private FeedAppUser user_id;
-
-    @OneToOne(mappedBy = "poll_id",cascade = CascadeType.ALL, fetch = FetchType.LAZY )
-    private Votes votes;
     private String question;
-    private int time_limit;
     private boolean is_active;
+    private boolean is_public;
+    private int yes_votes;
+    private int no_votes;
+
 
     public Long getId() {
         return id;
@@ -37,22 +37,6 @@ public class Poll {
         this.user_id = user_id;
     }
 
-    public Votes getVotes() {
-        return votes;
-    }
-
-    public void setVotes(Votes votes) {
-        this.votes = votes;
-    }
-
-    public int getTime_limit() {
-        return time_limit;
-    }
-
-    public void setTime_limit(int time_limit) {
-        this.time_limit = time_limit;
-    }
-
     public boolean getIs_active() {
         return is_active;
     }
@@ -60,11 +44,36 @@ public class Poll {
     public void setIs_active(boolean is_active) {
         this.is_active = is_active;
     }
+
     public String getQuestion() {
         return question;
     }
 
     public void setQuestion(String question) {
         this.question = question;
+    }
+
+    public boolean isIs_public() {
+        return is_public;
+    }
+
+    public void setIs_public(boolean is_public) {
+        this.is_public = is_public;
+    }
+
+    public int getYes_votes() {
+        return yes_votes;
+    }
+
+    public void setYes_votes(int yes_votes) {
+        this.yes_votes = yes_votes;
+    }
+
+    public int getNo_votes() {
+        return no_votes;
+    }
+
+    public void setNo_votes(int no_votes) {
+        this.no_votes = no_votes;
     }
 }
