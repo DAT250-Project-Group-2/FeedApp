@@ -13,6 +13,7 @@ import RegisterScreen from "./screens/RegisterScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import CreatePoll from "./screens/CreatePoll";
 import EditPoll from "./screens/EditPoll";
+import ResultScreen from "./screens/ResultScreen";
 
 const FeedApp = () => {
   return (
@@ -21,6 +22,8 @@ const FeedApp = () => {
       <Router>
         <div>
           <Switch>
+          <Route path="/polls/:id/results" component={ResultScreen}>
+            </Route>
             <Route path="/polls/:id" component={PollScreen}>
             </Route>
             <Route path="/polls">

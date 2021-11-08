@@ -39,11 +39,11 @@ const Profile = () => {
 
     useEffect(() => {
         getUserPolls()
-    },[]);
+    });
 
     return (
         <>
-        {localStorage.getItem("userID") == history.location.pathname.replace(/[^0-9]/g,'') ?
+        {localStorage.getItem("userID") === history.location.pathname.replace(/[^0-9]/g,'') ?
         <div className = "container">
             <h1 className = "text-center"> Your Polls</h1>
             <table className = "table table-striped">
@@ -68,6 +68,9 @@ const Profile = () => {
                                     </button></td>
                                     <td><button onClick={ () => deletePoll(poll.id)}>
                                     Delete
+                                    </button></td>
+                                    <td><button onClick={ () =>history.push(`/polls/${poll.id}/results`, {poll})}>
+                                    View results
                                     </button></td>    
                                 </tr>
                         )

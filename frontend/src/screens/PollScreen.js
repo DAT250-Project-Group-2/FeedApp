@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import PollService from "../services/PollService";
 import { Container, Button, Row, Col } from "react-bootstrap";
 import "./PollScreen.css";
+import { useHistory } from "react-router";
 
 
 const Poll = (props) => {
@@ -11,7 +12,7 @@ const Poll = (props) => {
   };
   const[yesBool, setyesBool] = useState(false); //not zero get yes votes from the vote's poll id
   const[noBool, setnoBool] = useState(false); //not zero get yes votes from the vote's poll id
-
+  const history = useHistory();
   const [currentPoll, setCurrentPoll] = useState(initialPollState);
 
   const getPoll = (id) => {
@@ -56,7 +57,7 @@ const Poll = (props) => {
       alert("please vote");
     }
     registerVote(currentPoll.id,yesBool);
-    // RouteChange to resultscreen
+    history.push(`/polls/${currentPoll.id}/results`, {currentPoll})
   }
 
   useEffect(() => {

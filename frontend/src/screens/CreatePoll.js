@@ -11,6 +11,7 @@ const CreatePoll = (props) => {
     question: "",
     user: props.location.state.user
   };
+  
   const history = useHistory();
   const [poll, setPoll] = useState(initialPollState);
   const [userData,setUserData] = useState();
