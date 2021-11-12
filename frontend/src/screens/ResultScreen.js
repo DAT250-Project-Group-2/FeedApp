@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PollService from "../services/PollService";
-import { Container, Button, Row, Col } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { Pie } from "react-chartjs-2";
 import "./PollScreen.css";
 
@@ -8,9 +8,12 @@ const ResultScreen = (props) => {
   const [currentPoll, setCurrentPoll] = useState([]);
 
   useEffect(() => {
-    getPoll(props.match.params.id);
-    console.log(props.match.params.id);
-  }, [props.match.params.id]);
+    setInterval(() => {
+      getPoll(props.match.params.id);
+    }, 1000);
+    }, [props.match.params.id]);
+    
+  
 
   const getPoll = (id) => {
     PollService.getPoll(id)

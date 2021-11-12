@@ -52,7 +52,7 @@ const EditPoll = (props) => {
   return (
     <>
     {console.log(props)}
-    {props.location.state.poll.user_id.id == localStorage.getItem("userID") ?
+    {props.location.state.poll.user_id.id === localStorage.getItem("userID") ?
     <div>
       {submitted ? (
         <div className="pollPinContainer">
