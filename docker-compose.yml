@@ -58,6 +58,12 @@ services:
     networks:
       - backend  
   
+  mongoDB:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    networks:
+      - backend
 # Volumes
 #volumes:
 #  db-data:

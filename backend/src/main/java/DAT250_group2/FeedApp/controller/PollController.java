@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+import static DAT250_group2.FeedApp.AnalyticsComponent.storeResult;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -54,7 +55,10 @@ public class PollController {
         if (existingPoll.isPresent()) {
             Poll _existingPoll = existingPoll.get();
             _existingPoll.setQuestion(poll.getQuestion());
-            _existingPoll.setIs_active(poll.getIs_active());
+            if(_existingPoll.getIs_active() == true && poll.getIs_active() == false) {
+                _existingPoll.setIs_active(poll.getIs_active());
+                storeResult(_existingPoll);
+            }
             _existingPoll.setIs_public(poll.isIs_public());
             _existingPoll.setNo_votes(poll.getNo_votes());
             _existingPoll.setYes_votes(poll.getYes_votes());
