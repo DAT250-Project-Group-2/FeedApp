@@ -41,6 +41,10 @@ const Profile = () => {
         getUserPolls()
     });
 
+    const publishResults = () => {
+        
+    }
+
     return (
         <>
         {localStorage.getItem("userID") === history.location.pathname.replace(/[^0-9]/g,'') ?
@@ -71,6 +75,9 @@ const Profile = () => {
                                     </button></td>
                                     <td><button onClick={ () =>history.push(`/polls/${poll.id}/results`, {poll})}>
                                     View results
+                                    </button></td>
+                                    <td><button onClick={publishResults(poll.id)}>
+                                    Close poll 
                                     </button></td>    
                                 </tr>
                         )
