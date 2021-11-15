@@ -21,7 +21,7 @@ const CreatePoll = (props) => {
   const createPoll = () => {
     PollService.createPoll({
       question: poll.question,
-      is_active: checked,
+      is_active: false,
       user_id: userData,
     })
       .then((response) => {
@@ -105,14 +105,14 @@ const CreatePoll = (props) => {
                       placeholder="Enter your question"
                     />
                   </Form.Group>
-                  <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                  {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
                     <Form.Check
                       type="checkbox"
                       label="Make poll active"
                       value={checked}
                       onChange={(e) => setChecked(e.target.checked)}
                     />
-                  </Form.Group>
+                  </Form.Group> */}
 
                   <div className="text-center">
                     <Button variant="primary" type="submit">

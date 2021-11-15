@@ -3,7 +3,7 @@ import PollService from "../services/PollService";
 import { Container, Button, Row, Col } from "react-bootstrap";
 import "./PollScreen.css";
 import { useHistory } from "react-router";
-
+import DweetService from "../services/DweetService";
 
 const Poll = (props) => {
   const initialPollState = {
@@ -26,11 +26,23 @@ const Poll = (props) => {
       });
   };
 
-  const registerVote = (id,vote) => {
-    PollService.registerVote(id,vote,{vote})
+
+  async function registerVote(id,vote) {
+    await PollService.registerVote(id,vote,{vote})
       .then((response) => {
         setCurrentPoll(response.data);
+        const question = response.data.question.replace(/ /g, "-").replace("?", "");
+        const yes = response.data.yes_votes;
+        const no = response.data.no_votes;
+        
         console.log(response.data);
+        DweetService.postDweet(question, yes, no).
+        then((response) => {
+          console.log(response.data)
+        })
+        .catch((e) => {
+          console.log(e)
+        })
       })
       .catch((e) => {
         console.log(e);

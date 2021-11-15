@@ -8,6 +8,7 @@ function Home() {
   const history = useHistory();
   const [pollPin, setPollPin] = useState();
   const [pollIds, setPollIds] = useState([]);
+  const user = localStorage.getItem("userID");
 
   useEffect(() => {
     const getAllPolls = () => {
@@ -16,7 +17,7 @@ function Home() {
           let polls = response.data
           let IDs = [];
           setPollIds(polls.map(poll => IDs.push(poll.id)));
-          console.log(pollIds)
+          // console.log(pollIds)
         })
         .catch((e) => {
           console.log(e);
@@ -30,12 +31,17 @@ function Home() {
   const onFormSubmit = (e) => {
     e.preventDefault();
     if (pollIds.includes(Number(pollPin))) {
-      routeChange(`/polls/${pollPin}`);
+
+        routeChange(`/polls/${pollPin}`);
+
     }
     else {
       alert("Could not find poll. Please enter a different pin.")
     }
   };
+
+
+
 
   function routeChange(path) {
     history.push(path);
