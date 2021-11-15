@@ -59,6 +59,7 @@ public class PollController {
                 _existingPoll.setIs_active(poll.getIs_active());
                 storeResult(_existingPoll);
             }
+            _existingPoll.setIs_active(poll.getIs_active());
             _existingPoll.setIs_public(poll.isIs_public());
             _existingPoll.setNo_votes(poll.getNo_votes());
             _existingPoll.setYes_votes(poll.getYes_votes());
