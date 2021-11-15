@@ -9,19 +9,24 @@ import { useHistory } from "react-router-dom";
 const CreatePoll = (props) => {
   const initialPollState = {
     question: "",
-    user: props.location.state.user
+    user: props.location.state.user,
+    is_active: false,
+    is_public: false
   };
   
   const history = useHistory();
   const [poll, setPoll] = useState(initialPollState);
   const [userData,setUserData] = useState();
-  const [checked, setChecked] = useState(false);
+  const [isActive, setIsActive] = useState(false);
+  const [isPublic, setIsPublic] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   const createPoll = () => {
+    console.log(poll);
     PollService.createPoll({
       question: poll.question,
-      is_active: false,
+      is_active: poll.is_active,
+      is_public: poll.is_public,
       user_id: userData,
     })
       .then((response) => {
@@ -54,10 +59,15 @@ const CreatePoll = (props) => {
     setPoll({ ...poll, [name]: value });
   };
 
+  const handleCheckbox = (event) => {
+    const { name } = event.target;
+    setPoll({ ...poll, [name]: event.target.checked });
+  };
+
+
   const onSubmit = (e) => {
     e.preventDefault();
     createPoll();
-    alert("Poll Created");
   };
 
   const newPoll = () => {
@@ -67,16 +77,19 @@ const CreatePoll = (props) => {
 
   return (
     <div>
+
       {submitted ? (
         <div className="pollPinContainer">
           <Container>
             <h4>Your poll was successfully created!</h4>
-            <button className="btn btn-success" onClick={newPoll}>
-              Add
-            </button>
-            <button className="btn btn-success" onClick={() => history.push(`/profile/${localStorage.getItem("userID")}`)}>
+          
+            <Button variant='success' onClick={newPoll}>
+              Add 
+            </Button>
+            {' '}
+            <Button className="btn btn-success" onClick={() => history.push(`/profile/${localStorage.getItem("userID")}`)}>
               Back to profile
-            </button>
+            </Button>
           </Container>
         </div>
       ) : (
@@ -105,14 +118,30 @@ const CreatePoll = (props) => {
                       placeholder="Enter your question"
                     />
                   </Form.Group>
-                  {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                  <Row>
+                  <Col>
+                  <Form.Group className="mb-3" controlId="formBasicCheckbox">
                     <Form.Check
                       type="checkbox"
                       label="Make poll active"
-                      value={checked}
-                      onChange={(e) => setChecked(e.target.checked)}
+                      name="is_active"
+                      value={poll.is_active}
+                      onChange={handleCheckbox}
                     />
-                  </Form.Group> */}
+                  </Form.Group>
+                  </Col>
+                  <Col>
+                  <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                    <Form.Check
+                      type="checkbox"
+                      label="Make poll public"
+                      name="is_public"
+                      value={poll.is_public}
+                      onChange={handleCheckbox}
+                    />
+                  </Form.Group>
+                  </Col>
+                  </Row>
 
                   <div className="text-center">
                     <Button variant="primary" type="submit">
