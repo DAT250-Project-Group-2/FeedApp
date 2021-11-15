@@ -12,6 +12,7 @@ public class Poll {
     private Long id;
 
     @ManyToOne
+    @JsonIgnoreProperties(value = "password")
     @JoinColumn(name = "user_id")
     private FeedAppUser user_id;
     private String question;
