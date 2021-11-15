@@ -36,8 +36,8 @@ const Poll = (props) => {
         const no = response.data.no_votes;
         
         console.log(response.data);
-        DweetService.postDweet(question, yes, no).
-        then((response) => {
+        DweetService.postDweet(question, yes, no)
+        .then((response) => {
           console.log(response.data)
         })
         .catch((e) => {

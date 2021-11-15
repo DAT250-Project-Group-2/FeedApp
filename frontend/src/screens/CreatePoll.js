@@ -17,8 +17,6 @@ const CreatePoll = (props) => {
   const history = useHistory();
   const [poll, setPoll] = useState(initialPollState);
   const [userData,setUserData] = useState();
-  const [isActive, setIsActive] = useState(false);
-  const [isPublic, setIsPublic] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   const createPoll = () => {

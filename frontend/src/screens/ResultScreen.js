@@ -15,8 +15,8 @@ const ResultScreen = (props) => {
     
   
 
-  const getPoll = (id) => {
-    PollService.getPoll(id)
+  async function getPoll(id) {
+    await PollService.getPoll(id)
       .then((response) => {
         setCurrentPoll(response.data);
       })
