@@ -11,14 +11,13 @@ import PollService from "../services/PollService";
 import "./Home.css";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { checkboxClasses } from "@mui/material";
 
 const EditPoll = (props) => {
   const history = useHistory();
   const [poll, setPoll] = useState([]);
   const [submitted, setSubmitted] = useState(false);
-  const [is_active, setIs_active] = useState(false);
-  const [is_public, setIs_public] = useState(false)
-
+    
   async function getPoll(id) {
     await PollService.getPoll(id)
       .then((response) => {
@@ -39,6 +38,8 @@ const EditPoll = (props) => {
       question: poll.question,
       is_active: poll.is_active,
       is_public: poll.is_public,
+      yes_votes: poll.yes_votes,
+      no_votes: poll.no_votes,
       user_id: poll.user,
     })
       .then((response) => {
@@ -168,7 +169,7 @@ const EditPoll = (props) => {
                             <Form.Check
                               type="checkbox"
                               label="Make poll active"
-                              name="is_active"
+                              name="is_active"          
                               defaultChecked={poll.is_active}
                               value={poll.is_active}
                               onChange={handleCheckbox}
