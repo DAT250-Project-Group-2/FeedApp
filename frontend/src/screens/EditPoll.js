@@ -10,13 +10,14 @@ import {
 import PollService from "../services/PollService";
 import "./Home.css";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
 
 const EditPoll = (props) => {
   const history = useHistory();
   const [poll, setPoll] = useState([]);
   const [submitted, setSubmitted] = useState(false);
-  const [status, setStatus] = useState(poll.is_active)  
+  const [isActive, setIsActive] = useState();
+  const [isPublic, setIsPublic] = useState();
+
   async function getPoll(id) {
     await PollService.getPoll(id)
       .then((response) => {
@@ -31,49 +32,24 @@ const EditPoll = (props) => {
   useEffect(() => {
     getPoll(props.match.params.id);
   }, [props.match.params.id]);
-  
+
   const updatePoll = () => {
     PollService.updatePoll(poll.id, {
       question: poll.question,
-      is_active: poll.is_active,
-      is_public: poll.is_public,
+      is_active: isActive,
+      is_public: isPublic,
       yes_votes: poll.yes_votes,
       no_votes: poll.no_votes,
       user_id: poll.user,
     })
       .then((response) => {
-        let res = response.data;
-        console.log(res);
+        console.log(response.data);
         setSubmitted(true);
-        publishResults(res.id);
       })
       .catch((e) => {
         console.log(e);
       });
   };
-  async function publishResults(pollid) {
-    const poll = await axios.get(`http://localhost:8080/polls/${pollid}`);
-    alert("Published")
-    const active = poll.data.is_active;
-    const yes = poll.data.yes_votes;
-    const no = poll.data.no_votes;
-    const question = poll.data.question.replace(/ /g, "-").replace("?", "");
-
-    await axios
-      .post(`https://dweet.io/dweet/for/${question}`, {
-        active,
-        yes,
-        no,
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-
-    console.log(`http://dweet.io/follow/${question}`);
-  }
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -93,10 +69,6 @@ const EditPoll = (props) => {
     history.push("/profile/" + localStorage.getItem("userID"));
   };
 
-  const handleCheckbox = (event) => {
-    const { name } = event.target;
-    setPoll({ ...poll, [name]: event.target.checked });
-  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -105,7 +77,6 @@ const EditPoll = (props) => {
 
   return (
     <>
-      {console.log(props)}
       {props.location.state.poll.user_id.id ==
       localStorage.getItem("userID") ? (
         <div>
@@ -136,13 +107,14 @@ const EditPoll = (props) => {
                           <h4>Edit poll</h4>
                         </Form.Label>
                         <br />
-                        <br />
 
                         {poll.yes_votes > 0 || poll.no_votes > 0 ? (
+                        <div>
+                          <h5>{poll.question}</h5>
                           <Form.Control
                             placeholder="Votes have been registered. Question cannot be changed."
                             disabled={true}
-                          />
+                          /></div>
                         ) : (
                           <FloatingLabel
                             controlId="floatingInput"
@@ -168,10 +140,10 @@ const EditPoll = (props) => {
                             <Form.Check
                               type="checkbox"
                               label="Make poll active"
-                              name="is_active"          
-                              defaultChecked={status}
-                              value={status}
-                              onChange={ (e) => setStatus(e.target.checked)}
+                              name="is_active"
+                              defaultChecked={poll.is_active}
+                              value={isActive}
+                              onClick={(e) => setIsActive(e.target.checked)}
                             />
                           </Form.Group>
                         </Col>
@@ -185,8 +157,8 @@ const EditPoll = (props) => {
                               label="Make poll public"
                               name="is_public"
                               defaultChecked={poll.is_public}
-                              value={poll.is_public}
-                              onChange={handleCheckbox}
+                              value={isPublic}
+                              onClick={(e) => setIsPublic(e.target.checked)}
                             />
                           </Form.Group>
                         </Col>
