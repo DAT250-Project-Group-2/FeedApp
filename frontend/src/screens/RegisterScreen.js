@@ -83,7 +83,7 @@ function RegisterScreen() {
                                     placeholder="email"
                                     />
                                <Form.Control
-                                    type="text"
+                                    type="password"
                                     required
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
