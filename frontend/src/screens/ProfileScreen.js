@@ -97,6 +97,7 @@ const Profile = () => {
             <Table className="table table-striped">
               <thead>
                 <tr>
+                  <th> Poll Pin</th>
                   <th> Poll Question</th>
                   <th> Active</th>
                 </tr>
@@ -104,6 +105,7 @@ const Profile = () => {
               <tbody>
                 {userPolls.map((poll) => (
                   <tr key={poll.id}>
+                    <td> {poll.id}</td>
                     <td> {poll.question}</td>
                     <td> {poll.is_active ? "Yes" : "No"}</td>
                     <div style={{display: 'flex', justifyContent:'flex-end'}}>
@@ -140,6 +142,7 @@ const Profile = () => {
                         Edit
                       </Button>
                     </td>
+                    
                     </div>
                   </tr>
                 ))}

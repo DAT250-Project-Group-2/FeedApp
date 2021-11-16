@@ -8,8 +8,8 @@ function AppNavbar() {
         <Navbar.Brand href="/">FeedApp</Navbar.Brand>
         <Nav className="me-auto">
           <Nav.Link href="/">Home</Nav.Link>
-          <Nav.Link href="/users">Users</Nav.Link>
-          <Nav.Link href="/polls">Polls</Nav.Link>
+          {/* <Nav.Link href="/users">Users</Nav.Link>
+          <Nav.Link href="/polls">Polls</Nav.Link> */}
         </Nav>
         <Nav>
           <Nav.Link href="/register">Register</Nav.Link>
