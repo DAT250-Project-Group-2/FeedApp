@@ -78,7 +78,7 @@ const Poll = (props) => {
 
   return (
     <>
-    { ((localStorage.getItem("userID") === null) && (currentPoll.is_public === true)) ?
+    { ((localStorage.getItem("userID") === null) && (currentPoll.is_public === false)) ?
     <h1 className="text-center"> Log in or create an account to access this poll!</h1>
     :
     <>
