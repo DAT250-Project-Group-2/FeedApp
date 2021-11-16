@@ -26,17 +26,17 @@ const Poll = (props) => {
       });
   };
 
-
   async function registerVote(id,vote) {
     await PollService.registerVote(id,vote,{vote})
       .then((response) => {
         setCurrentPoll(response.data);
-        const question = response.data.question.replace(/ /g, "-").replace("?", "");
+        const active = response.data.is_active;
         const yes = response.data.yes_votes;
         const no = response.data.no_votes;
+        const question = response.data.question.replace(/ /g, "-").replace("?", "");
         
         console.log(response.data);
-        DweetService.postDweet(question, yes, no)
+        DweetService.postDweet(question, yes, no, active)
         .then((response) => {
           console.log(response.data)
         })

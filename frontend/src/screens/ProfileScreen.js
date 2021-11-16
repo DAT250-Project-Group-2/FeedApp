@@ -3,6 +3,7 @@ import { Button, Container, Table } from "react-bootstrap";
 import PollService from "../services/PollService";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import DweetService from "../services/DweetService";
 import "./Home.css";
 
 const Profile = () => {
@@ -35,8 +36,6 @@ const Profile = () => {
     getUserPolls();
   });
 
- 
-
   async function publishResults(pollid) {
     const poll = await axios.get(`http://localhost:8080/polls/${pollid}`);
     const active = poll.data.is_active;
@@ -44,18 +43,13 @@ const Profile = () => {
     const no = poll.data.no_votes;
     const question = poll.data.question.replace(/ /g, "-").replace("?", "");
 
-    await axios
-      .post(`https://dweet.io/dweet/for/${question}`, {
-        Active: active ? "Yes" : "No",
-        yes,
-        no,
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    DweetService.postDweet(question, yes, no, active)
+    .then((response) => {
+      console.log(response.data)
+    })
+    .catch((e) => {
+      console.log(e)
+    })
     
     alert(`The poll have been published at http://dweet.io/follow/${question}`);
     console.log(`http://dweet.io/follow/${question}`);

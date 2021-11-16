@@ -7,7 +7,7 @@ import axios from "axios";
 
 const postDweet = (question, yes, no, active) => {
   return axios.post(`https://dweet.io/dweet/for/${question}`, {
-    "Active": active,
+    "Active": active ? "Yes" : "No",
     "Yes": yes,
     "No": no,
   });
