@@ -62,13 +62,15 @@ const Profile = () => {
 
   async function publishResults(pollid) {
     const poll = await axios.get(`http://localhost:8080/polls/${pollid}`);
-
+    alert("Published")
+    const active = poll.data.is_active;
     const yes = poll.data.yes_votes;
     const no = poll.data.no_votes;
     const question = poll.data.question.replace(/ /g, "-").replace("?", "");
 
     await axios
       .post(`https://dweet.io/dweet/for/${question}`, {
+        active,
         yes,
         no,
       })
