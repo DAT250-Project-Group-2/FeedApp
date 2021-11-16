@@ -7,7 +7,7 @@ function AppNavbar() {
       <Container>
         <Navbar.Brand href="/">FeedApp</Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link href="/">Home</Nav.Link>
+          <Nav.Link href="/">Enter Poll</Nav.Link>
           <Nav.Link href={"/profile/" + localStorage.getItem("userID")}>Profile</Nav.Link>
         </Nav>
         <Nav>

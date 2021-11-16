@@ -30,39 +30,15 @@ const Profile = () => {
       });
   };
 
-  const deletePoll = (pollid) => {
-    PollService.removePoll(pollid)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-    window.location.reload(false);
-  };
 
   useEffect(() => {
     getUserPolls();
   });
 
-  const updatePoll = (poll) => {
-    console.log("open");
-    PollService.updatePoll(poll.id, {
-      question: poll.question,
-      is_active: true,
-    })
-      .then((response) => {
-        let res = response.data;
-        console.log(res);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
+ 
 
   async function publishResults(pollid) {
     const poll = await axios.get(`http://localhost:8080/polls/${pollid}`);
-    alert("Published")
     const active = poll.data.is_active;
     const yes = poll.data.yes_votes;
     const no = poll.data.no_votes;
@@ -70,7 +46,7 @@ const Profile = () => {
 
     await axios
       .post(`https://dweet.io/dweet/for/${question}`, {
-        active,
+        Active: active ? "Yes" : "No",
         yes,
         no,
       })
@@ -80,7 +56,8 @@ const Profile = () => {
       .catch((e) => {
         console.log(e);
       });
-
+    
+    alert(`The poll have been published at http://dweet.io/follow/${question}`);
     console.log(`http://dweet.io/follow/${question}`);
   }
 
@@ -125,7 +102,6 @@ const Profile = () => {
                     {" "}
                     <td>
                       <Button
-                      
                         variant="outline-success"
                         onClick={() => publishResults(poll.id)}
                       >

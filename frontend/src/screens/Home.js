@@ -15,16 +15,16 @@ function Home() {
       PollService.getAllPolls()
         .then((response) => {
           let polls = response.data
-          let IDs = [];
-          setPollIds(polls.map(poll => IDs.push(poll.id)));
-          // console.log(pollIds)
+          let IDs = polls.map(poll => Number(poll.id));
+          setPollIds(IDs);
+          console.log(IDs)
         })
         .catch((e) => {
           console.log(e);
         });
     };
     getAllPolls();
-  });
+  }, []);
   
 
 //function that gets executed whenever you press enter if pollid exists reroutes you to routeChange(`/polls/${pollPin}`);
