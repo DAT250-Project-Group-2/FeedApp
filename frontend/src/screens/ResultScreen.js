@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import PollService from "../services/PollService";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import { Pie } from "react-chartjs-2";
 import "./PollScreen.css";
 
 const ResultScreen = (props) => {
   const [currentPoll, setCurrentPoll] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     setInterval(() => {
       getPoll(props.match.params.id);
     }, 1000);
-    }, [props.match.params.id]);
-    
-  
+  }, [props.match.params.id]);
 
   async function getPoll(id) {
     await PollService.getPoll(id)
@@ -23,7 +23,7 @@ const ResultScreen = (props) => {
       .catch((e) => {
         console.log(e);
       });
-  };
+  }
 
   const pieData = {
     labels: ["Yes", "No"],
@@ -54,6 +54,14 @@ const ResultScreen = (props) => {
             <Pie data={pieData} />
           )}
         </Col>
+        <Row>
+          <div className="text-center">
+            <br />
+            <Button variant="dark" onClick={() => history.push(`/`)}>
+              Enter new Poll
+            </Button>
+          </div>
+        </Row>
       </Row>
     </Container>
   );
