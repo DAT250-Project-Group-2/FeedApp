@@ -10,11 +10,14 @@ import {
 import PollService from "../services/PollService";
 import "./Home.css";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 const EditPoll = (props) => {
   const history = useHistory();
   const [poll, setPoll] = useState([]);
   const [submitted, setSubmitted] = useState(false);
+  const [is_active, setIs_active] = useState(false);
+  const [is_public, setIs_public] = useState(false)
 
   async function getPoll(id) {
     await PollService.getPoll(id)
@@ -30,7 +33,7 @@ const EditPoll = (props) => {
   useEffect(() => {
     getPoll(props.match.params.id);
   }, [props.match.params.id]);
-
+  
   const updatePoll = () => {
     PollService.updatePoll(poll.id, {
       question: poll.question,
@@ -42,11 +45,35 @@ const EditPoll = (props) => {
         let res = response.data;
         console.log(res);
         setSubmitted(true);
+        publishResults(res.id);
       })
       .catch((e) => {
         console.log(e);
       });
   };
+  async function publishResults(pollid) {
+    const poll = await axios.get(`http://localhost:8080/polls/${pollid}`);
+    alert("Published")
+    const active = poll.data.is_active;
+    const yes = poll.data.yes_votes;
+    const no = poll.data.no_votes;
+    const question = poll.data.question.replace(/ /g, "-").replace("?", "");
+
+    await axios
+      .post(`https://dweet.io/dweet/for/${question}`, {
+        active,
+        yes,
+        no,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+    console.log(`http://dweet.io/follow/${question}`);
+  }
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;

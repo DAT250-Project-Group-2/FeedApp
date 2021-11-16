@@ -4,6 +4,7 @@ import PollService from "../services/PollService";
 import UserService from "../services/UserService";
 import "./Home.css";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 
 const CreatePoll = (props) => {
@@ -13,7 +14,29 @@ const CreatePoll = (props) => {
     is_active: false,
     is_public: false
   };
-  
+  async function publishResults(pollid) {
+    const poll = await axios.get(`http://localhost:8080/polls/${pollid}`);
+    alert("Published")
+    const active = poll.data.is_active;
+    const yes = poll.data.yes_votes;
+    const no = poll.data.no_votes;
+    const question = poll.data.question.replace(/ /g, "-").replace("?", "");
+
+    await axios
+      .post(`https://dweet.io/dweet/for/${question}`, {
+        active,
+        yes,
+        no,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+    console.log(`http://dweet.io/follow/${question}`);
+  }
   const history = useHistory();
   const [poll, setPoll] = useState(initialPollState);
   const [userData,setUserData] = useState();
@@ -31,6 +54,7 @@ const CreatePoll = (props) => {
         let res = response.data;
         console.log(res);
         setSubmitted(true);
+        publishResults(res.id);
       })
       .catch((e) => {
         console.log(e);

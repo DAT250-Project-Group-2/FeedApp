@@ -5,8 +5,9 @@ import axios from "axios";
 //   return axios.get(`/polls/${question}`);
 // };
 
-const postDweet = (question, yes, no) => {
+const postDweet = (question, yes, no, active) => {
   return axios.post(`https://dweet.io/dweet/for/${question}`, {
+    "Active": active,
     "Yes": yes,
     "No": no,
   });
