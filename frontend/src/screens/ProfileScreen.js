@@ -97,15 +97,19 @@ const Profile = () => {
             <Table className="table table-striped">
               <thead>
                 <tr>
+                <th> Poll Pin</th>
                   <th> Poll Question</th>
                   <th> Active</th>
+                  <th> Public</th>
                 </tr>
               </thead>
               <tbody>
                 {userPolls.map((poll) => (
                   <tr key={poll.id}>
+                  <td> {poll.id}</td>
                     <td> {poll.question}</td>
                     <td> {poll.is_active ? "Yes" : "No"}</td>
+                    <td> {poll.is_public ? "Yes" : "No"}</td>
                     
                     <div style={{display: 'flex', justifyContent:'flex-end'}}>
                     <td>

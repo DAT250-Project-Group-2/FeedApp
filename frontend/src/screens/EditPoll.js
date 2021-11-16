@@ -23,6 +23,8 @@ const EditPoll = (props) => {
       .then((response) => {
         setPoll(response.data);
         console.log(response.data);
+        setIsActive(response.data.is_active)
+        setIsPublic(response.data.is_public)
       })
       .catch((e) => {
         console.log(e);
@@ -141,9 +143,9 @@ const EditPoll = (props) => {
                               type="checkbox"
                               label="Make poll active"
                               name="is_active"
-                              defaultChecked={poll.is_active}
+                              defaultChecked={isActive}
                               value={isActive}
-                              onClick={(e) => setIsActive(e.target.checked)}
+                              onClick={() => setIsActive(!isActive)}
                             />
                           </Form.Group>
                         </Col>
@@ -156,9 +158,9 @@ const EditPoll = (props) => {
                               type="checkbox"
                               label="Make poll public"
                               name="is_public"
-                              defaultChecked={poll.is_public}
+                              defaultChecked={isPublic}
                               value={isPublic}
-                              onClick={(e) => setIsPublic(e.target.checked)}
+                              onClick={() => setIsPublic(!isPublic)}
                             />
                           </Form.Group>
                         </Col>

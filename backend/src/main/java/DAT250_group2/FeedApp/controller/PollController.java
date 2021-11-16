@@ -52,17 +52,19 @@ public class PollController {
     public ResponseEntity<Poll> updatePoll(@PathVariable Long id, @RequestBody Poll poll) {
         Optional<Poll> existingPoll = service.getPollById(id);
 
+        Boolean existingPollActive = existingPoll.get().getIs_active();
+        Boolean newPollActive = poll.getIs_active();
+
         if (existingPoll.isPresent()) {
             Poll _existingPoll = existingPoll.get();
             _existingPoll.setQuestion(poll.getQuestion());
-            if(_existingPoll.getIs_active() == true && poll.getIs_active() == false) {
-                _existingPoll.setIs_active(poll.getIs_active());
-                storeResult(_existingPoll);
-            }
             _existingPoll.setIs_active(poll.getIs_active());
             _existingPoll.setIs_public(poll.isIs_public());
             _existingPoll.setNo_votes(poll.getNo_votes());
             _existingPoll.setYes_votes(poll.getYes_votes());
+            if(existingPollActive && !newPollActive) {
+                storeResult(_existingPoll);
+            } 
             return new ResponseEntity<>(service.savePoll(_existingPoll), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
